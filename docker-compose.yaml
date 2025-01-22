@@ -1,69 +1,64 @@
-x-healthcheck: &healthcheck
-  interval: 2s
-  timeout: 3s
-  retries: 5
-  start_period: 2s
-
 x-python-env: &python-env
   PYTHONUNBUFFERED: 1
   PYTHONIOENCODING: UTF-8
 
-## TODO: networkの設定
-## TODO: KERIAの必要なファイルの配置
 services:
   vlei-server:
     image: gleif/vlei
     environment:
       <<: *python-env
     command: vLEI-server -s ./schema/acdc -c ./samples/acdc/ -o ./samples/oobis/
-    healthcheck:
-      test: curl -f http://localhost:7723/oobi/EBfdlu8R27Fbx-ehrqwImnK-8Cm79sqbAQ4MmvEAYqao
-      <<: *healthcheck
     ports:
       - 7723:7723
+    networks:
+      agent_nw:
 
   keria-issuer:
-    image: ${KERIA_IMAGE:-weboftrust/keria}:${KERIA_IMAGE_TAG:-0.2.0-dev6}
+    image: weboftrust/keria:0.2.0-dev6
     environment:
       KERI_AGENT_CORS: 1
       <<: *python-env
     volumes:
       - ./config/keria.json:/keria/config/keri/cf/keria.json
-    command: start --config-dir /keria/config --config-file keria --name agent
-    healthcheck:
-      test: wget --spider http://keria:3902/spec.yaml
-      <<: *healthcheck
+    command: start --config-dir /keria/config --config-file keria --name agent-issuer
     ports:
       - 3901:3901
       - 3902:3902
       - 3903:3903
+    networks:
+      agent_nw:
 
   keria-holder:
-    image: ${KERIA_IMAGE:-weboftrust/keria}:${KERIA_IMAGE_TAG:-0.2.0-dev6}
+    image: weboftrust/keria:0.2.0-dev6
     environment:
       KERI_AGENT_CORS: 1
       <<: *python-env
     volumes:
       - ./config/keria.json:/keria/config/keri/cf/keria.json
-    command: start --config-dir /keria/config --config-file keria --name agent
-    healthcheck:
-      test: wget --spider http://keria:3902/spec.yaml
-      <<: *healthcheck
+    command: start --config-dir /keria/config --config-file keria --name agent-holder
     ports:
-      - 3901:3901
-      - 3902:3902
-      - 3903:3903
+      - 3904:3904
+      - 3905:3905
+      - 3906:3906
+    networks:
+      agent_nw:
 
   witness-demo:
     image: weboftrust/keri-witness-demo:1.1.0
     environment:
       <<: *python-env
-    healthcheck:
-      test: curl -f http://localhost:5642/oobi
-      <<: *healthcheck
     volumes:
       - ./config/witness-demo:/keripy/scripts/keri/cf/main
     ports:
       - 5642:5642
       - 5643:5643
       - 5644:5644
+    networks:
+      agent_nw:
+
+networks:
+  agent_nw:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16
