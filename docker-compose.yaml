@@ -4,6 +4,7 @@ x-python-env: &python-env
 
 services:
   vlei-server:
+    # 0.2.0
     image: gleif/vlei
     environment:
       <<: *python-env
