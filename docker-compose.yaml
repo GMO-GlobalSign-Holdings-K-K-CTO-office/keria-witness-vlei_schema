@@ -13,6 +13,7 @@ services:
       - 7723:7723
     networks:
       agent_nw:
+        ipv4_address: 172.19.0.4
 
   keria-issuer:
     image: weboftrust/keria:0.2.0-dev6
@@ -28,6 +29,7 @@ services:
       - 3903:3903
     networks:
       agent_nw:
+        ipv4_address: 172.19.0.3
 
   keria-holder:
     image: weboftrust/keria:0.2.0-dev6
@@ -43,6 +45,7 @@ services:
       - 3906:3906
     networks:
       agent_nw:
+        ipv4_address: 172.19.0.2
 
   witness-demo:
     image: weboftrust/keri-witness-demo:1.1.0
@@ -56,6 +59,7 @@ services:
       - 5644:5644
     networks:
       agent_nw:
+        ipv4_address: 172.19.0.6
 
 networks:
   agent_nw:
