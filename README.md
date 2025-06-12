@@ -11,7 +11,7 @@ Invoke the following containers:
 1. Install Docker and Docker Compose.
 2. Clone the repository and switch to one of the following tags (the latest tag for each major version):
    * v1.x: Uses container images with demo witnesses provided by WebOfTrust.
-   * (Work in Progress) v2.x: Uses raw `keripy` to launch a group of five witnesses manually. 
+   * (Work in Progress) v2.x: Uses `keripy` directly to launch a group of five witnesses.
 3. Run `docker-compose up -d` to start the containers.
 
 ## Reference Code
