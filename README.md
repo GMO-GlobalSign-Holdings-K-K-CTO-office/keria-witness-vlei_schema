@@ -12,6 +12,7 @@ Invoke the following containers:
 2. Clone the repository and switch to one of the following tags (the latest tag for each major version):
    * v1.x: Uses container images with demo witnesses provided by WebOfTrust.
    * (Work in Progress) v2.x: Uses `keripy` directly to launch a group of five witnesses.
+    - Issue: [Update repository with v2.0 witness deployment using direct keripy setup](https://github.com/GMO-GlobalSign-Holdings-K-K-CTO-office/keria-witness-vlei_schema/issues)
 3. Run `docker-compose up -d` to start the containers.
 
 ## Reference Code
