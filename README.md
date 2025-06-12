@@ -9,7 +9,7 @@ Invoke the following containers:
 
 ## Running
 1. Install Docker and Docker Compose.
-2. Clone the repository and switch to one of the following tags:
+2. Clone the repository and switch to one of the following tags (the latest tag for each major version):
    * v1.x: Uses container images with demo witnesses provided by WebOfTrust.
    * v2.x: Uses raw `keripy` to launch a group of five witnesses manually.
 
