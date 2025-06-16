@@ -76,9 +76,9 @@ services:
       - "5631:5631"
       - "5632:5632"
     volumes:
-      - ~/keri_data/witness/wit1/var:/usr/local/var
-      - ~/keri_config/witness/wit1/var:/usr/local/config
-      - ~/keri_log/witness/wit1:/keri_logs
+      - ./data/witness/wit1/var:/usr/local/var
+      - ./config/witness/wit1/var:/usr/local/config
+      - ./log/witness/wit1:/keri_logs
     command:
       - "witness"
       - "start"
@@ -110,9 +110,9 @@ services:
       - "5633:5633"
       - "5634:5634"
     volumes:
-      - ~/keri_data/witness/wit2/var:/usr/local/var
-      - ~/keri_config/witness/wit2/var:/usr/local/config
-      - ~/keri_log/witness/wit2:/keri_logs
+      - ./data/witness/wit2/var:/usr/local/var
+      - ./config/witness/wit2/var:/usr/local/config
+      - ./log/witness/wit2:/keri_logs
     command:
       - "witness"
       - "start"
@@ -144,9 +144,9 @@ services:
       - "5635:5635"
       - "5636:5636"
     volumes:
-      - ~/keri_data/witness/wit3/var:/usr/local/var
-      - ~/keri_config/witness/wit3/var:/usr/local/config
-      - ~/keri_log/witness/wit3:/keri_logs
+      - ./data/witness/wit3/var:/usr/local/var
+      - ./config/witness/wit3/var:/usr/local/config
+      - ./log/witness/wit3:/keri_logs
     command:
       - "witness"
       - "start"
@@ -178,9 +178,9 @@ services:
       - "5637:5637"
       - "5638:5638"
     volumes:
-      - ~/keri_data/witness/wit4/var:/usr/local/var
-      - ~/keri_config/witness/wit4/var:/usr/local/config
-      - ~/keri_log/witness/wit4:/keri_logs
+      - ./data/witness/wit4/var:/usr/local/var
+      - ./config/witness/wit4/var:/usr/local/config
+      - ./log/witness/wit4:/keri_logs
     command:
       - "witness"
       - "start"
@@ -212,9 +212,9 @@ services:
       - "5639:5639"
       - "5640:5640"
     volumes:
-      - ~/keri_data/witness/wit5/var:/usr/local/var
-      - ~/keri_config/witness/wit5/var:/usr/local/config
-      - ~/keri_log/witness/wit5:/keri_logs
+      - ./data/witness/wit5/var:/usr/local/var
+      - ./config/witness/wit5/var:/usr/local/config
+      - ./log/witness/wit5:/keri_logs
     command:
       - "witness"
       - "start"
