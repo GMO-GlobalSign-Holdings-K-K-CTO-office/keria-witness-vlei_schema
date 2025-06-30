@@ -71,33 +71,14 @@ services:
   witness1:
     <<: *keri-witness-base
     container_name: keri-witness-1
-      #    user: "1001:1001"
     ports:
       - "5631:5631"
       - "5632:5632"
     volumes:
-      - ./data/witness/wit1/var:/usr/local/var
+      - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/wit1/var:/usr/local/config
-      - ./log/witness/wit1:/keri_logs
-    command:
-      - "witness"
-      - "start"
-      - "-n"
-      - "witness-keystore"
-      - "-a"
-      - "wit1"
-      - "--loglevel"
-      - "INFO"
-      - "-T"
-      - "5631"
-      - "-H"
-      - "5632"
-      - "--logfile"
-      - "/keri_logs"
-      - "--config-dir"
-      - "/usr/local/config"
-      - "--config-file"
-      - "wit1"
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit1 5631 5632"]
     networks:
       agent_nw:
         ipv4_address: 172.19.0.5
@@ -105,33 +86,14 @@ services:
   witness2:
     <<: *keri-witness-base
     container_name: keri-witness-2
-      #    user: "1002:1002"
     ports:
       - "5633:5633"
       - "5634:5634"
     volumes:
-      - ./data/witness/wit2/var:/usr/local/var
+      - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/wit2/var:/usr/local/config
-      - ./log/witness/wit2:/keri_logs
-    command:
-      - "witness"
-      - "start"
-      - "-n"
-      - "witness-keystore"
-      - "-a"
-      - "wit2"
-      - "--loglevel"
-      - "INFO"
-      - "-T"
-      - "5633"
-      - "-H"
-      - "5634"
-      - "--logfile"
-      - "/keri_logs"
-      - "--config-dir"
-      - "/usr/local/config"
-      - "--config-file"
-      - "wit2"
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit2 5633 5634"]
     networks:
       agent_nw:
         ipv4_address: 172.19.0.6
@@ -139,33 +101,14 @@ services:
   witness3:
     <<: *keri-witness-base
     container_name: keri-witness-3
-      #    user: "1003:1003"
     ports:
       - "5635:5635"
       - "5636:5636"
     volumes:
-      - ./data/witness/wit3/var:/usr/local/var
+      - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/wit3/var:/usr/local/config
-      - ./log/witness/wit3:/keri_logs
-    command:
-      - "witness"
-      - "start"
-      - "-n"
-      - "witness-keystore"
-      - "-a"
-      - "wit3"
-      - "--loglevel"
-      - "INFO"
-      - "-T"
-      - "5635"
-      - "-H"
-      - "5636"
-      - "--logfile"
-      - "/keri_logs"
-      - "--config-dir"
-      - "/usr/local/config"
-      - "--config-file"
-      - "wit3"
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit2 5633 5634"]
     networks:
       agent_nw:
         ipv4_address: 172.19.0.7
@@ -173,33 +116,14 @@ services:
   witness4:
     <<: *keri-witness-base
     container_name: keri-witness-4
-      #    user: "1004:1004"
     ports:
       - "5637:5637"
       - "5638:5638"
     volumes:
-      - ./data/witness/wit4/var:/usr/local/var
+      - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/wit4/var:/usr/local/config
-      - ./log/witness/wit4:/keri_logs
-    command:
-      - "witness"
-      - "start"
-      - "-n"
-      - "witness-keystore"
-      - "-a"
-      - "wit4"
-      - "--loglevel"
-      - "INFO"
-      - "-T"
-      - "5637"
-      - "-H"
-      - "5638"
-      - "--logfile"
-      - "/keri_logs"
-      - "--config-dir"
-      - "/usr/local/config"
-      - "--config-file"
-      - "wit4"
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit4 5637 5638"]
     networks:
       agent_nw:
         ipv4_address: 172.19.0.8
@@ -207,33 +131,14 @@ services:
   witness5:
     <<: *keri-witness-base
     container_name: keri-witness-5
-      #    user: "1005:1005"
     ports:
       - "5639:5639"
       - "5640:5640"
     volumes:
-      - ./data/witness/wit5/var:/usr/local/var
+      - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/wit5/var:/usr/local/config
-      - ./log/witness/wit5:/keri_logs
-    command:
-      - "witness"
-      - "start"
-      - "-n"
-      - "witness-keystore"
-      - "-a"
-      - "wit5"
-      - "--loglevel"
-      - "INFO"
-      - "-T"
-      - "5639"
-      - "-H"
-      - "5640"
-      - "--logfile"
-      - "/keri_logs"
-      - "--config-dir"
-      - "/usr/local/config"
-      - "--config-file"
-      - "wit5"
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit5 5639 5640"]
     networks:
       agent_nw:
         ipv4_address: 172.19.0.9
