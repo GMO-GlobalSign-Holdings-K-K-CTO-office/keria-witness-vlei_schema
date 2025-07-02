@@ -5,10 +5,10 @@
     "curls": ["http://localhost:3902/"]
   },
   "iurls": [
-"http://172.19.0.5:5632/oobi/BN0BaRKyn4oKSpMmyZloyvStaME_bbHz8bfpir5EB56b/controller",
-"http://172.19.0.6:5634/oobi/BGCkFTreJst4laXN4W5qWCXpKR8faRme-7FmKQBAikWT/controller",
-"http://172.19.0.7:5636/oobi/BGOtP0MgLNCaDquFuOnoQSKQjnSOCB2ZY8IsD4I62ffB/controller",
-"http://172.19.0.8:5638/oobi/BEtPGEWEhQDL5uQncmizZJSrkea-FhV6Q5gRj7FKHDN-/controller",
-"http://172.19.0.9:5640/oobi/BEDkIbR2LZd4BhCWWhgO9xl5MYeVqppibA8kib0wWJjs/controller"
-  ]
+"http://172.19.0.5:5632/oobi/BHj-MFvu60ADCBtc-MLwVuZV_KI30u_ZcpJF7EvLKNXa/controller",
+"http://172.19.0.6:5634/oobi/BOEuhpjxn-DclDdDMJpZUbAgD9mhheuLgR2ikkKQnM4K/controller",
+"http://172.19.0.7:5636/oobi/BPFW9NB4nBwG9dvxtU4KaPlK8C2qU51LpTwoKvFs5KPk/controller",
+"http://172.19.0.8:5638/oobi/BAhIHxhyAhhL2emDIq6JNPvMMiZxiDmgwFZXj5sDLrMq/controller",
+"http://172.19.0.9:5640/oobi/BO1L1nPpq9LNeYmRQswerHJP_ckrECCXAtukqHvQOm2f/controller"
+]
 }
