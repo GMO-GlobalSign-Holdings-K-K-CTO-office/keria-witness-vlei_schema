@@ -1,6 +1,9 @@
 import argparse
+import os
 import subprocess
 import sys
+
+CONFIG_DIR = "/usr/local/config"
 
 def run_command(command):
     """
@@ -54,11 +57,11 @@ def main():
 
     # Execute the series of commands
     # 1. kli init
-    init_cmd = ["kli", "init", "-n", args.witness_name, "-s", salt_value, "--nopasscode"]
+    init_cmd = ["kli", "init", "-n", args.witness_name, "-s", salt_value, "--nopasscode", "-c", CONFIG_DIR, "--config-file", args.witness_name]
     run_command(init_cmd)
 
     # 2. kli incept
-    incept_cmd = ["kli", "incept", "-n", args.witness_name, "-a", args.witness_name, "-c", "/usr/local/config", "-f", args.witness_name]
+    incept_cmd = ["kli", "incept", "-n", args.witness_name, "-a", args.witness_name, "-f", os.path.join(CONFIG_DIR, "incept.json")]
     run_command(incept_cmd)
 
     # 3. kli witness start
