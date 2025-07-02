@@ -5,6 +5,16 @@ import sys
 
 CONFIG_DIR = "/usr/local/config"
 
+# Dictionary holding keystore names and their corresponding Salt values
+# IMPORTANT: Do not hard-code sensitive information like salts in production code!!
+SALT_DICT = {
+    "wit1": "0ABk5t3L527Hwx4hELaUobDl",
+    "wit2": "0ACP-C_tQ8DW2cPIy_evhn3N",
+    "wit3": "0AD2XHz4o5wxSgstSwEpqtQt",
+    "wit4": "0ACBV3L_hMGhoOG3puG5qAA2",
+    "wit5": "0ACeGTQVZZluNuXoRb7eRPwt"
+}
+
 def run_command(command):
     """
     Executes a command and displays its output in real-time.
@@ -37,19 +47,9 @@ def main():
 
     args = parser.parse_args()
 
-    # Dictionary holding keystore names and their corresponding Salt values
-    # IMPORTANT: Do not hard-code sensitive information like salts in production code!!
-    salt_dict = {
-        "wit1": "0ABk5t3L527Hwx4hELaUobDl",
-        "wit2": "0ACP-C_tQ8DW2cPIy_evhn3N",
-        "wit3": "0AD2XHz4o5wxSgstSwEpqtQt",
-        "wit4": "0ACBV3L_hMGhoOG3puG5qAA2",
-        "wit5": "0ACeGTQVZZluNuXoRb7eRPwt"
-    }
-
     # Retrieve the Salt value corresponding to the provided keystore name
     # If not found in the dictionary, a warning is printed and a default value is used.
-    salt_value = salt_dict.get(args.witness_name)
+    salt_value = SALT_DICT.get(args.witness_name)
     if salt_value == "default_salt_for_new_keystore":
         print(f"Warning: Salt value for '{args.witness_name}' not found in internal dictionary. Using default salt: '{salt_value}'.")
     else:
