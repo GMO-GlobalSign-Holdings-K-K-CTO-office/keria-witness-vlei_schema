@@ -69,8 +69,9 @@ def main():
         "kli", "witness", "start",
         "-n", args.witness_name,
         "-a", args.witness_name,
-        "-T", str(args.tcp_port),  # Port numbers must be passed as strings
-        "-H", str(args.http_port)  # Port numbers must be passed as strings
+        "-T", str(args.tcp_port),
+        "-H", str(args.http_port),
+        "-loglevel", "INFO"
     ]
     run_command(witness_start_cmd)
 
