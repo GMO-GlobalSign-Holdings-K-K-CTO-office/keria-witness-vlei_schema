@@ -77,7 +77,7 @@ services:
     volumes:
       - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/incept.json:/usr/local/config/incept.json
-      - ./config/witness/wit1/var/keri/cf/main/wit1.json:/usr/local/config/keri/cf/wit1.json
+      - ./config/witness/wit1/var:/usr/local/config
     entrypoint: ["bash", "-c"]
     command: ["python3 /app/run_witness.py wit1 5631 5632"]
     networks:
@@ -93,7 +93,7 @@ services:
     volumes:
       - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/incept.json:/usr/local/config/incept.json
-      - ./config/witness/wit2/var/keri/cf/main/wit2.json:/usr/local/config/keri/cf/wit2.json
+      - ./config/witness/wit2/var:/usr/local/config
     entrypoint: ["bash", "-c"]
     command: ["python3 /app/run_witness.py wit2 5633 5634"]
     networks:
@@ -109,7 +109,7 @@ services:
     volumes:
       - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/incept.json:/usr/local/config/incept.json
-      - ./config/witness/wit3/var/keri/cf/main/wit3.json:/usr/local/config/keri/cf/wit3.json
+      - ./config/witness/wit3/var:/usr/local/config
     entrypoint: ["bash", "-c"]
     command: ["python3 /app/run_witness.py wit3 5635 5636"]
     networks:
@@ -125,7 +125,7 @@ services:
     volumes:
       - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/incept.json:/usr/local/config/incept.json
-      - ./config/witness/wit4/var/keri/cf/main/wit4.json:/usr/local/config/keri/cf/wit4.json
+      - ./config/witness/wit3/var:/usr/local/config
     entrypoint: ["bash", "-c"]
     command: ["python3 /app/run_witness.py wit4 5637 5638"]
     networks:
@@ -141,7 +141,7 @@ services:
     volumes:
       - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/incept.json:/usr/local/config/incept.json
-      - ./config/witness/wit5/var/keri/cf/main/wit5.json:/usr/local/config/keri/cf/wit5.json
+      - ./config/witness/wit3/var:/usr/local/config
     entrypoint: ["bash", "-c"]
     command: ["python3 /app/run_witness.py wit5 5639 5640"]
     networks:
