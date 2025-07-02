@@ -111,7 +111,7 @@ services:
       - ./config/witness/incept.json:/usr/local/config/incept.json
       - ./config/witness/wit3/var:/usr/local/config
     entrypoint: ["bash", "-c"]
-    command: ["python3 /app/run_witness.py wit2 5633 5634"]
+    command: ["python3 /app/run_witness.py wit3 5635 5636"]
     networks:
       agent_nw:
         ipv4_address: 172.19.0.7
