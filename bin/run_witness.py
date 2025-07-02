@@ -71,7 +71,7 @@ def main():
         "-a", args.witness_name,
         "-T", str(args.tcp_port),
         "-H", str(args.http_port),
-        "-loglevel", "INFO"
+        "--loglevel", "INFO"
     ]
     run_command(witness_start_cmd)
 
