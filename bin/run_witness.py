@@ -18,23 +18,32 @@ SALT_DICT = {
 
 def run_command(command):
     """
-    Executes a command and displays its output in real-time.
-    Exits with an error if the command fails.
+    Executes a command and displays its output in real-time with improved buffering.
     """
     print(f"Executing: {' '.join(command)}")
+    sys.stdout.flush()
+    
     try:
-        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
-        for line in process.stdout:
-            sys.stdout.write(line)
+        process = subprocess.Popen(
+            command, 
+            stdout=subprocess.PIPE, 
+            stderr=subprocess.STDOUT, 
+            text=True, 
+            bufsize=0
+        )
+        
+        for line in iter(process.stdout.readline, ''):
+            print(line.rstrip())
+            sys.stdout.flush()
+            
         process.wait()
         if process.returncode != 0:
             print(f"Error: Command failed with exit code {process.returncode}", file=sys.stderr)
+            sys.stderr.flush()
             sys.exit(1)
-    except FileNotFoundError:
-        print(f"Error: Command not found. Make sure '{command[0]}' is in your PATH.", file=sys.stderr)
-        sys.exit(1)
     except Exception as e:
         print(f"An unexpected error occurred: {e}", file=sys.stderr)
+        sys.stderr.flush()
         sys.exit(1)
 
 def main():
@@ -62,7 +71,7 @@ def main():
     run_command(init_cmd)
 
     # 2. kli incept
-    incept_cmd = ["kli", "incept", "-n", args.witness_name, "-a", args.witness_name, "-f", os.path.join(COMMON_DIR, "incept.json")]
+    incept_cmd = ["kli", "incept", "-n", args.witness_name, "-a", args.witness_name, "-c", CONFIG_DIR, "-f", os.path.join(COMMON_DIR, "incept.json")]
     run_command(incept_cmd)
 
     # 3. kli witness start

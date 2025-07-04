@@ -125,7 +125,7 @@ services:
     volumes:
       - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/incept.json:/usr/local/common/incept.json
-      - ./config/witness/wit3/var:/usr/local/config
+      - ./config/witness/wit4/var:/usr/local/config
     entrypoint: ["bash", "-c"]
     command: ["python3 /app/run_witness.py wit4 5637 5638"]
     networks:
@@ -141,7 +141,7 @@ services:
     volumes:
       - ./bin/run_witness.py:/app/run_witness.py
       - ./config/witness/incept.json:/usr/local/common/incept.json
-      - ./config/witness/wit3/var:/usr/local/config
+      - ./config/witness/wit5/var:/usr/local/config
     entrypoint: ["bash", "-c"]
     command: ["python3 /app/run_witness.py wit5 5639 5640"]
     networks:
