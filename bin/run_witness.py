@@ -4,17 +4,7 @@ import subprocess
 import sys
 
 CONFIG_DIR = "/usr/local/config"
-COMMON_DIR = "/usr/local/common"
-
-# Dictionary holding keystore names and their corresponding Salt values
-# IMPORTANT: Do not hard-code sensitive information like salts in production code!!
-SALT_DICT = {
-    "wit1": "0ABk5t3L527Hwx4hELaUobDl",
-    "wit2": "0ACP-C_tQ8DW2cPIy_evhn3N",
-    "wit3": "0AD2XHz4o5wxSgstSwEpqtQt",
-    "wit4": "0ACBV3L_hMGhoOG3puG5qAA2",
-    "wit5": "0ACeGTQVZZluNuXoRb7eRPwt"
-}
+PREF_DIR = "/usr/local/preference"
 
 def run_command(command):
     """
@@ -54,24 +44,22 @@ def main():
     parser.add_argument("witness_name", help="witness name (1st argument)")
     parser.add_argument("tcp_port", type=int, help="TCP Port Number (2nd argument)")
     parser.add_argument("http_port", type=int, help="HTTP Port Number (3rd argument)")
+    parser.add_argument("salt", help="Salt value (4th argument, optional)", nargs='?', default=None)
 
     args = parser.parse_args()
 
-    # Retrieve the Salt value corresponding to the provided keystore name
-    # If not found in the dictionary, a warning is printed and a default value is used.
-    salt_value = SALT_DICT.get(args.witness_name)
-    if salt_value == "default_salt_for_new_keystore":
-        print(f"Warning: Salt value for '{args.witness_name}' not found in internal dictionary. Using default salt: '{salt_value}'.")
-    else:
-        print(f"Using Salt value '{salt_value}' for keystore '{args.witness_name}'.")
-
     # Execute the series of commands
     # 1. kli init
-    init_cmd = ["kli", "init", "-n", args.witness_name, "-s", salt_value, "--nopasscode", "-c", CONFIG_DIR, "--config-file", args.witness_name]
+    init_cmd = ["kli", "init", "-n", args.witness_name, "--nopasscode", "-c", CONFIG_DIR, "--config-file", args.witness_name]
+
+    # Add the salt value if args.salt defined.
+    if args.salt:
+        init_cmd.extend(["-s", args.salt])
+
     run_command(init_cmd)
 
     # 2. kli incept
-    incept_cmd = ["kli", "incept", "-n", args.witness_name, "-a", args.witness_name, "-c", CONFIG_DIR, "-f", os.path.join(COMMON_DIR, "incept.json")]
+    incept_cmd = ["kli", "incept", "-n", args.witness_name, "-a", args.witness_name, "-c", CONFIG_DIR, "-f", os.path.join(PREF_DIR, "incept.json")]
     run_command(incept_cmd)
 
     # 3. kli witness start
