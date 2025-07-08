@@ -8,7 +8,16 @@ PREF_DIR = "/usr/local/preference"
 
 def run_command(command):
     """
-    Executes a command and displays its output in real-time with improved buffering.
+    Executes a command and displays its output in real-time.
+    Returns a tuple of (success, return_code) instead of exiting on error.
+    
+    Args:
+        command: List of command and its arguments
+        
+    Returns:
+        tuple: (success: bool, return_code: int)
+            - success: True if command succeeded, False otherwise
+            - return_code: The exit code of the command (0 for success)
     """
     print(f"Executing: {' '.join(command)}")
     sys.stdout.flush()
@@ -27,14 +36,21 @@ def run_command(command):
             sys.stdout.flush()
             
         process.wait()
+        
         if process.returncode != 0:
-            print(f"Error: Command failed with exit code {process.returncode}", file=sys.stderr)
             sys.stderr.flush()
-            sys.exit(1)
+            return False, process.returncode
+        
+        return True, 0
+        
+    except FileNotFoundError:
+        sys.stderr.flush()
+        return False, 127
+        
     except Exception as e:
         print(f"An unexpected error occurred: {e}", file=sys.stderr)
         sys.stderr.flush()
-        sys.exit(1)
+        return False, 1
 
 def main():
     parser = argparse.ArgumentParser(description="A script to execute KLI commands (positional arguments version)")
@@ -56,11 +72,20 @@ def main():
     if args.salt:
         init_cmd.extend(["-s", args.salt])
 
-    run_command(init_cmd)
+    suc, retcode = run_command(init_cmd)
+    if not suc:
+        print(f"Habery initialization failed with return code {retcode}. Exiting.", file=sys.stderr)
+        sys.exit(retcode)
 
     # 2. kli incept
     incept_cmd = ["kli", "incept", "-n", args.witness_name, "-a", args.witness_name, "-c", CONFIG_DIR, "-f", os.path.join(PREF_DIR, "incept.json")]
-    run_command(incept_cmd)
+    suc, retcode = run_command(incept_cmd)
+    if not suc:
+        if retcode == 255:
+            print("Inception already completed. Skipping this step.")
+        else:
+            print(f"Inception failed with return code {retcode}. Exiting.", file=sys.stderr)
+            sys.exit(retcode)
 
     # 3. kli witness start
     witness_start_cmd = [
@@ -71,7 +96,10 @@ def main():
         "-H", str(args.http_port),
         "--loglevel", "INFO"
     ]
-    run_command(witness_start_cmd)
+    suc, retcode = run_command(witness_start_cmd)
+    if not suc:
+        print(f"Witness start failed with return code {retcode}. Exiting.", file=sys.stderr)
+        sys.exit(retcode)
 
     print("\nAll KLI commands executed successfully!")
 
