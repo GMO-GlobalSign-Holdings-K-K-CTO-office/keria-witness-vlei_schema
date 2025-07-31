@@ -6,12 +6,11 @@ x-keri-witness-base: &keri-witness-base
     image: "weboftrust/keri:1.2.0-rc1"
 
 x-keria-base: &keria-base
-    image: "weboftrust/keria:latest"
+    image: "weboftrust/keria:0.2.0-rc1"
 
 services:
   vlei-server:
-    # 0.2.0
-    image: gleif/vlei
+    image: "gleif/vlei:0.2.0"
     environment:
       <<: *python-env
     command: vLEI-server -s ./schema/acdc -c ./samples/acdc/ -o ./samples/oobis/
