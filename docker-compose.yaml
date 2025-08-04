@@ -2,9 +2,15 @@ x-python-env: &python-env
   PYTHONUNBUFFERED: 1
   PYTHONIOENCODING: UTF-8
 
+x-keri-witness-base: &keri-witness-base
+    image: "weboftrust/keri:1.2.0-rc1"
+
+x-keria-base: &keria-base
+    image: "weboftrust/keria:0.2.0-rc1"
+
 services:
   vlei-server:
-    image: gleif/vlei:0.2.0
+    image: "gleif/vlei:0.2.0"
     environment:
       <<: *python-env
     command: vLEI-server -s ./schema/acdc -c ./samples/acdc/ -o ./samples/oobis/
@@ -15,13 +21,13 @@ services:
         ipv4_address: 172.19.0.4
 
   keria-issuer:
-    image: weboftrust/keria:0.2.0-dev6
+    <<: *keria-base
     environment:
       KERI_AGENT_CORS: 1
       <<: *python-env
     volumes:
       - ./config/keria.json:/keria/config/keri/cf/keria.json
-    command: start --config-dir /keria/config --config-file keria --name agent-issuer
+    command: start --config-dir /keria/config --config-file keria --loglevel INFO --name agent-issuer
     ports:
       - 3901:3901
       - 3902:3902
@@ -31,13 +37,13 @@ services:
         ipv4_address: 172.19.0.3
 
   keria-holder:
-    image: weboftrust/keria:0.2.0-dev6
+    <<: *keria-base
     environment:
       KERI_AGENT_CORS: 1
       <<: *python-env
     volumes:
       - ./config/keria.json:/keria/config/keri/cf/keria.json
-    command: start --config-dir /keria/config --config-file keria --name agent-holder
+    command: start --config-dir /keria/config --config-file keria --loglevel INFO --name agent-holder
     ports:
       - 3904:3904
       - 3905:3905
@@ -46,19 +52,100 @@ services:
       agent_nw:
         ipv4_address: 172.19.0.2
 
-  witness-demo:
-    image: weboftrust/keri-witness-demo:1.1.0
-    environment:
-      <<: *python-env
-    volumes:
-      - ./config/witness-demo:/keripy/scripts/keri/cf/main
+#  witness-demo:
+#    image: weboftrust/keri-witness-demo:1.1.0
+#    environment:
+#      <<: *python-env
+#    volumes:
+#      - ./config/witness-demo:/keripy/scripts/keri/cf/main
+#    ports:
+#      - 5642:5642
+#      - 5643:5643
+#      - 5644:5644
+#    networks:
+#      agent_nw:
+#        ipv4_address: 172.19.0.6
+#
+
+  witness1:
+    <<: *keri-witness-base
+    container_name: keri-witness-1
     ports:
-      - 5642:5642
-      - 5643:5643
-      - 5644:5644
+      - "5631:5631"
+      - "5632:5632"
+    volumes:
+      - ./bin/run_witness.py:/app/run_witness.py
+      - ./config/witness/incept.json:/usr/local/preference/incept.json
+      - ./config/witness/wit1/var:/usr/local/config
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit1 5631 5632 0ABk5t3L527Hwx4hELaUobDl"]
+    networks:
+      agent_nw:
+        ipv4_address: 172.19.0.5
+
+  witness2:
+    <<: *keri-witness-base
+    container_name: keri-witness-2
+    ports:
+      - "5633:5633"
+      - "5634:5634"
+    volumes:
+      - ./bin/run_witness.py:/app/run_witness.py
+      - ./config/witness/incept.json:/usr/local/preference/incept.json
+      - ./config/witness/wit2/var:/usr/local/config
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit2 5633 5634 0ACP-C_tQ8DW2cPIy_evhn3N"]
     networks:
       agent_nw:
         ipv4_address: 172.19.0.6
+
+  witness3:
+    <<: *keri-witness-base
+    container_name: keri-witness-3
+    ports:
+      - "5635:5635"
+      - "5636:5636"
+    volumes:
+      - ./bin/run_witness.py:/app/run_witness.py
+      - ./config/witness/incept.json:/usr/local/preference/incept.json
+      - ./config/witness/wit3/var:/usr/local/config
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit3 5635 5636 0AD2XHz4o5wxSgstSwEpqtQt"]
+    networks:
+      agent_nw:
+        ipv4_address: 172.19.0.7
+
+  witness4:
+    <<: *keri-witness-base
+    container_name: keri-witness-4
+    ports:
+      - "5637:5637"
+      - "5638:5638"
+    volumes:
+      - ./bin/run_witness.py:/app/run_witness.py
+      - ./config/witness/incept.json:/usr/local/preference/incept.json
+      - ./config/witness/wit4/var:/usr/local/config
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit4 5637 5638 0ACBV3L_hMGhoOG3puG5qAA2"]
+    networks:
+      agent_nw:
+        ipv4_address: 172.19.0.8
+
+  witness5:
+    <<: *keri-witness-base
+    container_name: keri-witness-5
+    ports:
+      - "5639:5639"
+      - "5640:5640"
+    volumes:
+      - ./bin/run_witness.py:/app/run_witness.py
+      - ./config/witness/incept.json:/usr/local/preference/incept.json
+      - ./config/witness/wit5/var:/usr/local/config
+    entrypoint: ["bash", "-c"]
+    command: ["python3 /app/run_witness.py wit5 5639 5640 0ACeGTQVZZluNuXoRb7eRPwt"]
+    networks:
+      agent_nw:
+        ipv4_address: 172.19.0.9
 
 networks:
   agent_nw:
